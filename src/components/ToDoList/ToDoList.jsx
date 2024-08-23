@@ -1,29 +1,63 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { TodoItem } from './TodoItem'
 
-export const ToDoList = () => {
+export const TodoList = () => {
+
+    const [tasks, setTasks] = useState([
+        {
+            id: 1,
+            text: 'Git gud',
+            completed: true
+        },
+        {
+            id: 2,
+            text: 'Learn React',
+            completed: false
+        }
+    ])
+
+    const [text, setText] = useState('')
+
+    const addTask = (text) => {
+        const newTask = {
+            id: Date.now(),
+            text,
+            completed: false
+        }
+
+        setTasks([...tasks, newTask])
+        setText('')
+    }
+
+    const deleteTask = (id) => {
+        setTasks(tasks.filter(task => task.id !== id))
+    }
+
+    const toggleCompleted = (id) => {
+        setTasks(tasks.map(task => {
+            if (task.id === id) {
+                return {...task, completed: !task.completed}
+            } else {
+                return task
+            }
+        }))
+    }
+
     return (
-        <>
-            <div className="top">
-                <h1>To Do</h1>
-                    <img src="src/assets/arrow-right.svg" alt="" />
-            </div>
-            <div className="middle">
-                <div className="items">
-                    <p>Example item #1</p>
-                    <p>Example item #2</p>
-                    <p>Example item #3</p>
-                    <p>Example item #4</p>
-                </div>
-                <div className="options">
-                    <p>Remove</p>
-                    <p>Remove</p>
-                    <p>Remove</p>
-                    <p>Remove</p>
-                </div>
-            </div>
-            <div className="bottom">
-                <p>Add new todo item...</p>
-            </div>
-        </>
+        <div className="todo-list">
+            {tasks.map(task => (
+                <TodoItem
+                key={task.id}
+                task={task}
+                deleteTask={deleteTask}
+                toggleCompleted={toggleCompleted}
+                />
+            ))}
+            <input
+                value={text}
+                onChange={e => setText(e.target.value)}
+            />
+            <button onClick={() => addTask(text)}>Add</button>
+        </div>
     )
 }

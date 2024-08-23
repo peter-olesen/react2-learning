@@ -1,6 +1,7 @@
 import { Clicker } from './components/Clicker/Clicker'
 import { Input } from './components/Input/Input'
-import { ToDoList } from './components/ToDoList/ToDoList'
+import { TodoList } from './components/TodoList/TodoList'
+import { TodoItem } from './components/TodoList/TodoItem'
 import './App.scss'
 
 function App() {
@@ -9,7 +10,8 @@ function App() {
       {/* <Clicker /> */}
       {/* <Input /> */}
 
-      <ToDoList />
+      <TodoList />
+      <TodoItem />
     </>
   )
 }
